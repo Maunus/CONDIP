@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoNDiP – Copenhagen Nahuatl Dictionary Project</title>
+<meta name="description" content="Interactive dictionary of 16th-century Nahuatl linking roots, words and texts.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/">CoNDiP <span>Copenhagen Nahuatl Dictionary Project</span></a>
+    <nav class="main-nav">
+      <a href="#/roots" data-nav="roots">Roots</a>
+      <a href="#/words" data-nav="words">Words</a>
+      <a href="#/texts" data-nav="texts">Texts</a>
+      <a href="#/about" data-nav="about">About</a>
+    </nav>
+  </div>
+  <div class="wrap">
+    <form class="search" id="search-form" role="search">
+      <input type="search" id="q" name="q" placeholder="Search Nahuatl, English or Spanish (e.g. atl, water, agua)" autocomplete="off" aria-label="Search">
+      <select id="scope" aria-label="Search in">
+        <option value="all">Roots and words</option>
+        <option value="roots">Roots</option>
+        <option value="words">Words</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</header>
+<main class="wrap" id="app" aria-live="polite">
+  <p class="muted">Loading dictionary…</p>
+</main>
+<footer class="site-footer wrap">
+  CoNDiP was created by Una Canger and Michael Thomsen (University of Copenhagen). Data exported from the original site, 2026.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

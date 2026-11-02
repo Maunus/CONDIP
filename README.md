@@ -3,10 +3,20 @@
 Interactive dictionary of 16th-century Nahuatl linking a Root Dictionary, a Word Dictionary and a corpus of analysed texts.
 Original site by Michael Thomsen and Una Canger (ca. 2007–2008).
 
+## The website
+`site/` is a static website (plain HTML, CSS and JavaScript, no server or database). It reads `site/data/dictionary.json` and `site/data/texts.json`.
+
+- Preview locally: `cd site && python3 -m http.server`, then open http://localhost:8000
+- After changing the CSV files in `data/csv/`, rebuild the site data: `python3 tools/build_site_data.py`
+- Publishing: `.github/workflows/pages.yml` deploys `site/` to GitHub Pages on every push to `main`.
+  One-time setup: in the repo's Settings → Pages, set Source to "GitHub Actions".
+
 ## Contents
 - `legacy/` – the original PHP site, with database credentials removed (put them in `legacy/config.php`, see `config.example.php`).
 - `data/condip.sql` – MySQL export of the dictionary tables (exported from phpMyAdmin 2026-11-02; only the `test17*` tables).
 - `data/csv/` – the same tables as UTF-8 CSV.
+- `site/` – the new static website (see above).
+- `tools/build_site_data.py` – builds the website's JSON from `data/csv/`.
 - `tools/sql_to_sqlite_csv.py` – rebuilds a SQLite file and the CSVs from the SQL export:
   `python3 tools/sql_to_sqlite_csv.py data/condip.sql condip.sqlite data/csv`
 
