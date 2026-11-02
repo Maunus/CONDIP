@@ -1,0 +1,163 @@
+/* DelRammer */
+.tdTop {
+  border: 4px solid #BBEEBB;
+  text-align: center; 
+  width: 668px;
+}
+.tdInf {
+  border: 4px solid #88AA00;
+  text-align: center; 
+  width: 668px;
+}
+.tdRod {
+  border: 4px solid #EEBBBB;
+  text-align: center; 
+  width: 668px;
+}
+.tdOrd {
+  border: 4px solid #BBBBEE;
+  text-align: center; 
+  width: 668px;
+}
+.tdTxt {
+  border: 4px solid #DDDDAA;
+  text-align: center; 
+  width: 668px;
+}
+
+/* Toplinier */
+.head_blaa1 {
+  font-family: "Times New Roman"; 
+  font-size: 21px; 
+  color: #FFFFFF;
+  background-image: url(head_blaa.jpg); 
+  background-repeat: repeat;
+  border: 0px solid #AAAAAA;
+  height: 23px; 
+  text-align: center; 
+}
+.head_blaa2 {
+  font-family: "Times New Roman"; 
+  font-size: 18px; 
+  color: #FFFFFF;
+  background-image: url(head_blaa.jpg); 
+  background-repeat: repeat;
+  border: 0px solid #AAAAAA;
+  height: 20px; 
+  text-align: center; 
+}
+
+/* Knaplinie */
+.knaplinie {
+  background-image: url(head_graa.jpg); 
+  background-repeat: repeat;
+  border: 0px solid #AAAAAA;
+  height: 23px; 
+  text-align: center; 
+}
+.liniefyld {
+  background-image: url(head_graa.jpg); 
+  background-repeat: repeat;
+  border: 0px solid #AAAAAA;
+  height: 15px; 
+  text-align: center; 
+}
+.linieknap {
+  font-family: "Times New Roman"; 
+  font-size: 13px; 
+  color: #FFFFFF;
+  background-image: url(btn_gron.jpg); 
+  background-repeat: repeat;
+  border: 0px solid #AAAAAA;
+  width: 96px;
+  height: 15px; 
+  text-align: center; 
+}
+
+/* Tabeloverskrift */
+.head_graa {
+  font-family: "Times New Roman"; 
+  font-size: 15px; 
+  color: #FFFFFF;
+  background-image: url(head_graa.jpg); 
+  background-repeat: repeat;
+  border: 2px solid #AAAAAA;
+  padding-left: 8px;
+  height: 17px; 
+}
+
+/* Post linier */
+.post_aktiv {
+  border: 2px solid #BBFFBB;
+  padding-left: 4px;
+  font-weight: bold; 
+}
+.post_aktiv_sub {
+  border: 2px solid #BBFFBB;
+  padding-left: 4px;
+  font-weight: normal; 
+}
+.post_pasiv {
+  border: 2px solid #AAAAAA;
+  padding-left: 4px;
+  font-weight: normal; 
+}
+
+/* Løs knap på siden */
+.knapG { 
+  width: 104px; 
+  height: 26px; 
+  background: #BBFF44; 
+  font-family: "Times New Roman"; 
+  font-size: 16px; 
+}
+
+/* Fri tekst i vejledning mv. */
+.FriTekst { 
+  text-align: left;
+}
+
+/* LogOn og NyBruger */
+.LoNu { 
+  text-align: center;
+}
+
+/* Beskrivelse */
+.Beskriv { 
+  font-family: "Times New Roman"; 
+  font-size: 14px; 
+  text-align: left;
+  margin-left: 5px
+}
+.delHead { 
+  font-family: "Times New Roman"; 
+  font-size: 16px; 
+  text-align: left;
+}
+
+/* Globale indstillinger */
+body { 
+  font-family: "Times New Roman"; 
+  font-size: 14px; 
+  color: black; 
+  background-color: #BBBBBB; 
+  text-align: center;
+  margin: 0px;
+}
+input { 
+  color: black; 
+  background-color: #EAEAEA; 
+  font-family: "Times New Roman"; 
+  font-size: 16px; 
+}
+
+h5 { 
+  font-size: 22px; 
+}
+
+/* Links */
+a:link	  { color: #771155; }
+a:visited { color: #551177; }
+a:focus	  { font-weight: bold; }
+a:hover	  { color: #550055; font-weight: bold; }
+a:active  { font-weight: bold; }
