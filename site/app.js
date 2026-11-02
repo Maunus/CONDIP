@@ -15,11 +15,13 @@ const PAL_MAP = { '´': "'", '¸': '≈' };
 const mapChars = (s, m) => (s || '').replace(/[´äëïö£²¹³¸]/g, c => m[c] || c);
 const tra = s => mapChars(s, TRA_MAP);
 // Paleography: the database stores marks that Latin-1 could not hold as codes.
-// "~" after a letter and "q#3" are an abbreviation tilde; umlaut vowels are macrons.
-// Other codes (#2, #4, q#6, *, ^ …) are shown unchanged until their meaning is confirmed.
+// "~" after a letter and "q#3" are an abbreviation tilde; umlaut vowels are macrons;
+// "#4" after a vowel (Bancroft Dialogues, Carochi orthography) is a short-vowel breve.
+// Other codes (#2, q#6, *, ^ …) are shown unchanged until their meaning is confirmed.
 const PAL_VOWELS = { 'ä': 'ā', 'ë': 'ē', 'ï': 'ī', 'ö': 'ō', 'Ä': 'Ā', 'Ë': 'Ē', 'Ï': 'Ī', 'Ö': 'Ō' };
 const pal = s => mapChars(s, PAL_MAP)
   .replace(/q#3/g, 'q\u0303')
+  .replace(/([aeiouAEIOU])#4/g, '$1\u0306')
   .replace(/(\S)~/g, '$1\u0303')
   .replace(/[äëïöÄËÏÖ]/g, c => PAL_VOWELS[c]);
 // Commentary is prose: convert the vowel and consonant letters, but keep ´ (used there as a quote mark).
