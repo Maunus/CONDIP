@@ -120,3 +120,4 @@ details summary { cursor: pointer; font-family: var(--ui); font-weight: 600; mar
   table.list th, table.list td { padding: 6px 7px; }
 }
 .line sup { font-size: 0.65em; line-height: 0; }
+.pal-mark { color: var(--muted); font-style: normal; font-size: 0.8em; cursor: help; }

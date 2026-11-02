@@ -14,20 +14,37 @@ const TRA_MAP = { '´': 'ˀ', 'ä': 'ā', 'ë': 'ē', 'ï': 'ī', 'ö': 'ō', '�
 const PAL_MAP = { '´': "'", '¸': '≈' };
 const mapChars = (s, m) => (s || '').replace(/[´äëïö£²¹³¸]/g, c => m[c] || c);
 const tra = s => mapChars(s, TRA_MAP);
-// Paleography: the database stores marks that Latin-1 could not hold as codes.
-// "~" after a letter is an abbreviation tilde; umlaut vowels are macrons;
-// "q#3" and "q#6" are q with superscript "ui" and "ua" (provisional, not yet checked against the manuscripts);
-// "#4" after a vowel (Bancroft Dialogues, Carochi orthography) is a short-vowel breve.
-// Other codes (#2, *, ^ …) are shown unchanged until their meaning is confirmed.
+// Paleography: the database stores manuscript marks as codes, explained in Appendix A of
+// Una Canger's 1992 manual (site/manual.html):
+//   X~  X^   a tilde / a similar mark over the preceding letter
+//   q#3 = qui, q#6 = qua (shown as q with superscript "ui" / "ua"), p#10 = pro (ꝓ)
+//   V#4      short vowel (breve; Bancroft Dialogues, Carochi orthography)
+//   #2       new paragraph (¶)
+//   #8, #11  flourish starting / finishing a signature
+//   *        note to a word or sentence in the original edition's TEXTS.TXT (not available)
+// Umlaut vowels are macrons. #9 and ¨ are not explained and are shown as they are.
 const PAL_VOWELS = { 'ä': 'ā', 'ë': 'ē', 'ï': 'ī', 'ö': 'ō', 'Ä': 'Ā', 'Ë': 'Ē', 'Ï': 'Ī', 'Ö': 'Ō' };
 const pal = s => mapChars(s, PAL_MAP)
   .replace(/q#3/g, 'q\uE001')
   .replace(/q#6/g, 'q\uE002')
+  .replace(/p#10/g, '\uA753')
+  .replace(/#11/g, '\uE004')
+  .replace(/#8/g, '\uE003')
   .replace(/([aeiouAEIOU])#4/g, '$1\u0306')
+  .replace(/#2/g, '¶')
+  .replace(/\*/g, '\uE005')
   .replace(/(\S)~/g, '$1\u0303')
+  .replace(/(\S)\^/g, '$1\u0302')
   .replace(/[äëïöÄËÏÖ]/g, c => PAL_VOWELS[c]);
-// pal() marks the superscripts with private-use characters; turn them into HTML after escaping.
-const palHtml = s => esc(pal(s)).replace(/\uE001/g, '<sup>ui</sup>').replace(/\uE002/g, '<sup>ua</sup>');
+// pal() marks superscripts and editorial marks with private-use characters; turn them into HTML after escaping.
+const PAL_HTML = {
+  '\uE001': '<sup>ui</sup>',
+  '\uE002': '<sup>ua</sup>',
+  '\uE003': '<span class="pal-mark" title="Flourish at the start of a signature">(flourish)</span> ',
+  '\uE004': ' <span class="pal-mark" title="Flourish finishing a signature">(flourish)</span>',
+  '\uE005': '<sup class="pal-mark" title="Note in the original edition (TEXTS.TXT), not preserved">*</sup>',
+};
+const palHtml = s => esc(pal(s)).replace(/[\uE001-\uE005]/g, c => PAL_HTML[c]);
 // Commentary is prose: convert the vowel and consonant letters, but keep ´ (used there as a quote mark).
 const COM_MAP = Object.fromEntries(Object.entries(TRA_MAP).filter(([c]) => c !== '´' && c !== '¸'));
 const com = s => mapChars(s, COM_MAP);
@@ -314,7 +331,7 @@ function viewAbout() {
     <p>This dictionary describes Nahuatl as it is used in Mesoamerican sources and codices from the 16th century.
     Nahuatl is still spoken today by about 1.5 million people, mostly in central Mexico.</p>
     <h2>Project description</h2>
-    <p class="small muted">From the 1992 description and manual by Una Canger.</p>
+    <p class="small muted">From the 1992 <a href="manual.html">Description and Manual</a> by Una Canger, which also explains the analysis and its principles.</p>
     <p>CoNDiP is a tool for cracking the use and meaning of words in Nahuatl texts. It provides immediate connections between
     texts and words, and between words and roots. It organizes the material, and facilitates studies of how words are used in texts,
     what words are formed with what roots, etc. It does not necessarily provide elegant text translations nor even adequate
