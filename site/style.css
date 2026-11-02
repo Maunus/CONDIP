@@ -119,3 +119,4 @@ details summary { cursor: pointer; font-family: var(--ui); font-weight: 600; mar
   .facts dd { margin-bottom: 8px; }
   table.list th, table.list td { padding: 6px 7px; }
 }
+.line sup { font-size: 0.65em; line-height: 0; }

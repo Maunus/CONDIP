@@ -15,15 +15,19 @@ const PAL_MAP = { '´': "'", '¸': '≈' };
 const mapChars = (s, m) => (s || '').replace(/[´äëïö£²¹³¸]/g, c => m[c] || c);
 const tra = s => mapChars(s, TRA_MAP);
 // Paleography: the database stores marks that Latin-1 could not hold as codes.
-// "~" after a letter and "q#3" are an abbreviation tilde; umlaut vowels are macrons;
+// "~" after a letter is an abbreviation tilde; umlaut vowels are macrons;
+// "q#3" and "q#6" are q with superscript "ui" and "ua" (provisional, not yet checked against the manuscripts);
 // "#4" after a vowel (Bancroft Dialogues, Carochi orthography) is a short-vowel breve.
-// Other codes (#2, q#6, *, ^ …) are shown unchanged until their meaning is confirmed.
+// Other codes (#2, *, ^ …) are shown unchanged until their meaning is confirmed.
 const PAL_VOWELS = { 'ä': 'ā', 'ë': 'ē', 'ï': 'ī', 'ö': 'ō', 'Ä': 'Ā', 'Ë': 'Ē', 'Ï': 'Ī', 'Ö': 'Ō' };
 const pal = s => mapChars(s, PAL_MAP)
-  .replace(/q#3/g, 'q\u0303')
+  .replace(/q#3/g, 'q\uE001')
+  .replace(/q#6/g, 'q\uE002')
   .replace(/([aeiouAEIOU])#4/g, '$1\u0306')
   .replace(/(\S)~/g, '$1\u0303')
   .replace(/[äëïöÄËÏÖ]/g, c => PAL_VOWELS[c]);
+// pal() marks the superscripts with private-use characters; turn them into HTML after escaping.
+const palHtml = s => esc(pal(s)).replace(/\uE001/g, '<sup>ui</sup>').replace(/\uE002/g, '<sup>ua</sup>');
 // Commentary is prose: convert the vowel and consonant letters, but keep ´ (used there as a quote mark).
 const COM_MAP = Object.fromEntries(Object.entries(TRA_MAP).filter(([c]) => c !== '´' && c !== '¸'));
 const com = s => mapChars(s, COM_MAP);
@@ -93,7 +97,7 @@ function wnoOffset(s) {
 }
 function renderTokens(s, opts = {}) {
   const line = primaryLine(s);
-  const show = s.tra !== '' ? tra : pal;
+  const show = s.tra !== '' ? t => esc(tra(t)) : palHtml;
   const offset = wnoOffset(s);
   const occ = D.occBySent.get(s.id);
   let i = 0, linkable = true;
@@ -107,9 +111,9 @@ function renderTokens(s, opts = {}) {
     const wid = linkable && occ && occ.get(wno);
     if (opts.links !== false && wid && D.words.has(wid)) {
       const w = D.words.get(wid);
-      return `<a class="tok${hl}" href="#/word/${wid}" title="${esc(w.ort)}: ${esc(w.eng)}">${esc(show(tok))}</a>`;
+      return `<a class="tok${hl}" href="#/word/${wid}" title="${esc(w.ort)}: ${esc(w.eng)}">${show(tok)}</a>`;
     }
-    return `<span class="tok${hl}">${esc(show(tok))}</span>`;
+    return `<span class="tok${hl}">${show(tok)}</span>`;
   }).join(' ');
 }
 
@@ -285,7 +289,7 @@ function viewText(code, fol, params) {
         <div class="no">${s.sno}</div>
         <div>
           <div class="line nah">${renderTokens(s, { highlight: s.id === cur ? wno : 0 })}</div>
-          ${s.tra && textLayers.pal && s.pal ? `<div class="line pal">${esc(pal(s.pal))}</div>` : ''}
+          ${s.tra && textLayers.pal && s.pal ? `<div class="line pal">${palHtml(s.pal)}</div>` : ''}
           ${textLayers.eng && s.eng ? `<div class="line eng">${esc(s.eng)}</div>` : ''}
         </div>
       </div>`).join('')}</div>`;
