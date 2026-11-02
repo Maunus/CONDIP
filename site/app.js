@@ -325,7 +325,7 @@ function viewAbout() {
     ['imp.ag. 2', 'impersonal agent + 2 objects (passive verb with 1 object)'],
     ['imp.ag. 3', 'impersonal agent + 2 objects (passive verb with 2 objects)'], ['R', 'reduplication']];
   const letters = [['ā ē ī ō', 'long vowels'], ['ˀ', 'saltillo (glottal stop)'], ['λ', 'tl'], ['¢', 'tz'],
-    ['č', 'ch'], ['kʷ', 'cu / uc'], ['-  +  =', 'morpheme boundaries in the analysed form'], ['#2', 'homonym number']];
+    ['č', 'ch'], ['kʷ', 'cu / uc'], ['-  +  =', 'morpheme boundaries in the analysed form'], ['A E I O', 'vowel length and a following glottal stop are unknown (Canger 1992)'], ['#2', 'homonym number']];
   const textList = [...D.sources.values()].map(s => [s.code, s.folioList.length ? `fol. ${s.folioList.join(', ')}` : '', s.title + (s.note ? ': ' + s.note : '')]);
   app.innerHTML = `<h1>About CoNDiP</h1>
     <p>This dictionary describes Nahuatl as it is used in Mesoamerican sources and codices from the 16th century.
